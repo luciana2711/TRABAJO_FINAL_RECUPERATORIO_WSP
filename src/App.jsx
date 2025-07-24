@@ -1,31 +1,23 @@
 import React, { useState, useEffect } from 'react';
-// Importamos chatData solo para la inicialización del estado
-import { chatData as initialChatData } from './data/chatdata'; 
+import { chatData as initialChatData } from './data/chatData'; 
 
 function App() {
-    // chatData ahora es parte del estado para que los cambios se rendericen
     const [chats, setChats] = useState(initialChatData);
     const [activeChatId, setActiveChatId] = useState(null); 
     const [showSidebar, setShowSidebar] = useState(true); 
     const [showProfileModal, setShowProfileModal] = useState(false); 
     const [showMyProfileModal, setShowMyProfileModal] = useState(false); 
-    // Estado para el texto del nuevo mensaje en el input
     const [newMessageText, setNewMessageText] = useState('');
 
-    // Obtenemos el chat activo del estado 'chats'
     const activeChat = chats[activeChatId];
 
-    // Efecto para actualizar el comportamiento si el tamaño de la ventana cambia (no directamente relacionado con el envío)
     useEffect(() => {
         const handleResize = () => {
-            // No necesitamos ajustar showSidebar aquí, ya que el comportamiento es full-screen toggle para ambos.
-            // Esto solo se mantendría si tuvieras otros elementos responsive que dependan del tamaño de la ventana.
         };
         window.addEventListener('resize', handleResize);
         return () => window.removeEventListener('resize', handleResize);
-    }, []);
+    }, []); 
 
-    // Efecto para hacer scroll al final de los mensajes cada vez que activeChatId o los mensajes cambian
     useEffect(() => {
         if (activeChat) {
             const chatMessagesDiv = document.querySelector('.chat-messages');
@@ -33,7 +25,7 @@ function App() {
                 chatMessagesDiv.scrollTop = chatMessagesDiv.scrollHeight;
             }
         }
-    }, [activeChatId, activeChat?.messages.length]); // Depende de la longitud de los mensajes para re-scroll
+    }, [activeChatId, activeChat?.messages.length]); 
 
     const handleContactClick = (id) => {
         setActiveChatId(id);
@@ -42,7 +34,7 @@ function App() {
 
     const handleSendMessage = () => {
         if (newMessageText.trim() === '' || !activeChatId) {
-            return; // No enviar mensajes vacíos o si no hay chat activo
+            return; 
         }
 
         const now = new Date();
@@ -50,12 +42,10 @@ function App() {
 
         const newMessage = { type: 'sent', text: newMessageText.trim(), time: time };
 
-        // Actualizar el estado de forma inmutable
         setChats(prevChats => {
-            const updatedChats = { ...prevChats }; // Copia superficial de todos los chats
-            const currentChatMessages = [...updatedChats[activeChatId].messages, newMessage]; // Copia y añade el nuevo mensaje
+            const updatedChats = { ...prevChats }; 
+            const currentChatMessages = [...updatedChats[activeChatId].messages, newMessage]; 
             
-            // Actualiza el chat específico con los nuevos mensajes
             updatedChats[activeChatId] = {
                 ...updatedChats[activeChatId],
                 messages: currentChatMessages,
@@ -63,7 +53,7 @@ function App() {
             return updatedChats;
         });
 
-        setNewMessageText(''); // Limpiar el input después de enviar
+        setNewMessageText(''); 
     };
 
     const handleBackArrowClick = (event) => {
@@ -137,13 +127,11 @@ function App() {
                     <div className="sidebar-header">
                         <h3>Chats</h3>
                         <div className="header-icons">
-                            {/* Aquí irían tus iconos si los tienes (ej. SVG o Font Awesome) */}
                         </div>
                     </div>
                     <div className="contact-list">
-                        {/* Renderiza los contactos dinámicamente usando los 'chats' del estado */}
                         {Object.keys(chats).map((chatId) => {
-                            const contact = chats[chatId]; // Usar 'chats' del estado
+                            const contact = chats[chatId]; 
                             const lastMessage = contact.messages[contact.messages.length - 1];
 
                             return (
@@ -182,7 +170,6 @@ function App() {
                                     <p>{activeChat ? activeChat.lastSeen : ''}</p>
                                 </div>
                                 <div className="chat-header-icons">
-                                    {/* Aquí irían tus iconos */}
                                 </div>
                             </div>
                             <div className="chat-messages">
@@ -196,8 +183,8 @@ function App() {
                                 <input 
                                     type="text" 
                                     placeholder="Mensaje" 
-                                    value={newMessageText} // Controlado por el estado
-                                    onChange={(e) => setNewMessageText(e.target.value)} // Actualiza el estado al escribir
+                                    value={newMessageText} 
+                                    onChange={(e) => setNewMessageText(e.target.value)} 
                                     onKeyPress={handleInputKeyPress} 
                                 />
                                 <button onClick={handleSendMessage}>➡️</button>
