@@ -1,0 +1,681 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+
+/* Reglas fundamentales para que la aplicación ocupe el 100% del alto y ancho */
+html, body, #root { 
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    height: 100%;
+    overflow: hidden; /* Evita barras de desplazamiento no deseadas en el html/body */
+}
+
+body {
+    font-family: 'Inter', Arial, sans-serif; /* Usar Inter como fuente principal */
+    background-color: #dadbd3; /* Color de fondo de WhatsApp fuera del contenedor principal */
+    display: flex; /* Permite centrar el contenedor si no ocupa el 100% */
+    justify-content: center;
+    align-items: center;
+}
+
+.container {
+    display: flex;
+    width: 100%; /* Ocupa el 100% del ancho del body */
+    height: 100%; /* Ocupa el 100% del alto del body */
+    max-width: none; /* Asegura que no haya un límite de ancho máximo */
+    background-color: #fff; /* Fondo blanco del contenedor principal de la app */
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15); /* Sombra más pronunciada para el contenedor principal */
+    border-radius: 0; /* Elimina bordes redondeados si es de pantalla completa */
+    overflow: hidden; /* Evita desbordamientos dentro del contenedor */
+}
+
+/* Sidebar y Chat Area - Ambos ocuparán el 100% del contenedor cuando estén visibles */
+.sidebar {
+    width: 100%; /* Ocupa el 100% del ancho del contenedor */
+    height: 100%; /* Ocupa el 100% del alto del contenedor */
+    border-right: 1px solid #e0e0e0; /* Mantener si quieres una línea divisoria al borde derecho */
+    display: flex;
+    flex-direction: column;
+    background-color: #f0f2f5;
+}
+
+/* --- SECCIÓN: MI PERFIL (en la sidebar) --- */
+.my-profile-section {
+    padding: 15px;
+    background-color: #11a086; /* Fondo gris claro, similar a WhatsApp Web */
+    border-bottom: 1px solid #ffffff;
+    display: flex;
+    align-items: center;
+    justify-content: space-between; /* Para empujar los iconos a la derecha */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05); /* Sombra sutil */
+    min-height: 60px; /* Altura mínima para asegurar espacio */
+    /* cursor: pointer; /* MOVEMOS ESTO A .my-profile-info-clickable */
+    /* transition: background-color 0.2s ease-in-out; */
+}
+
+/* Nuevo div clickeable para el perfil */
+.my-profile-info-clickable {
+    display: flex;
+    align-items: center;
+    flex-grow: 1; /* Para que ocupe el espacio y sea un área grande clickeable */
+    cursor: pointer; /* Indica que es clickeable */
+    padding: 5px 0; /* Pequeño padding para el área clickeable */
+    margin-left: -5px; /* Ajuste para que el hover comience desde el borde */
+    border-radius: 5px; /* Bordes redondeados para el efecto hover */
+    transition: background-color 0.2s ease-in-out;
+}
+
+.my-profile-info-clickable:hover {
+    background-color: rgba(0, 0, 0, 0.1); /* Fondo sutil al pasar el ratón */
+}
+
+
+.my-profile-avatar {
+    width: 50px; 
+    height: 50px;
+    border-radius: 50%;
+    overflow: hidden;
+    flex-shrink: 0; /* Evita que la imagen se encoja */
+    margin-right: 15px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Sombra para el avatar */
+    background-color:#04947a ; /* Asegura que no haya fondo CSS en el contenedor del avatar */
+}
+
+.my-profile-avatar img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.my-profile-info h4 {
+    margin: 0;
+    font-size: 17px;
+    font-weight: 500;
+    color: #ffffff;
+}
+
+.my-profile-icons {
+    display: flex;
+    gap: 20px; /* Espacio entre iconos */
+}
+
+.my-profile-icons .icon {
+    font-size: 22px;
+    color: #667781; /* Color gris para los iconos */
+    cursor: pointer; /* Los iconos siguen siendo clickeables individualmente */
+    transition: color 0.2s ease-in-out, transform 0.2s ease-in-out;
+}
+
+.my-profile-icons .icon:hover {
+    color: #008069; /* Verde al pasar el ratón */
+    transform: scale(1.1); /* Pequeño efecto de escala */
+}
+/* --- FIN SECCIÓN: MI PERFIL (en la sidebar) --- */
+
+
+.sidebar-header {
+    padding: 15px;
+    border-bottom: 1px solid #e0e0e0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #23aa91; /* Verde de WhatsApp */
+    color: white;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Sombra sutil para el header */
+    z-index: 10; 
+}
+
+.sidebar-header h3 {
+    margin: 0;
+    font-weight: 600; 
+}
+
+.header-icons {
+    display: flex;
+    gap: 20px; 
+}
+
+.header-icons .icon {
+    font-size: 22px;
+    cursor: pointer;
+    transition: transform 0.2s ease-in-out;
+}
+
+.header-icons .icon:hover {
+    transform: scale(1.1); 
+}
+
+
+.contact-list {
+    flex-grow: 1;
+    overflow-y: auto;
+    background-color: #ffffff; /* Fondo blanco para la lista de contactos */
+}
+
+.contact-item {
+    display: flex;
+    align-items: center;
+    padding: 12px 15px; /* Más padding para mejor espaciado */
+    border-bottom: 1px solid #f2f2f2;
+    cursor: pointer;
+    transition: background-color 0.2s ease-in-out;
+}
+
+.contact-item:hover {
+    background-color: #f5f6f6;
+}
+
+.contact-item.active {
+    background-color: #e9e9e9;
+    border-left: 4px solid #008069; /* Indicador de chat activo */
+    padding-left: 11px; /* Ajuste para compensar el borde */
+}
+
+.contact-avatar {
+    width: 60px; 
+    height: 60px; 
+    border-radius: 50%;
+    overflow: hidden;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-shrink: 0;
+    margin-right: 15px; 
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Sombra para avatares */
+}
+
+.contact-avatar img {
+    width: 100%; 
+    height: 100%; 
+    object-fit: cover;
+    border-radius: 50%;
+}
+
+.contact-info {
+    flex-grow: 1;
+    overflow: hidden;
+}
+
+.contact-info h4 {
+    margin: 0 0 4px 0; 
+    font-size: 17px; 
+    font-weight: 500; 
+    color: #111b21;
+}
+
+.contact-info p {
+    margin: 0;
+    font-size: 13px; 
+    color: #667781;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.contact-time {
+    font-size: 11px; 
+    color: #667781;
+    flex-shrink: 0;
+    margin-left: 10px;
+}
+
+/* Contenedor del área de chat (el panel derecho cuando está visible) */
+.chat-area {
+    width: 100%; 
+    height: 100%; 
+    display: flex;
+    flex-direction: column;
+    min-width: 0; 
+    min-height: 0;
+    background-color: #ffffff; /* Fondo blanco por defecto para el panel derecho */
+}
+
+/* Estilos para el div que contiene el chat activo (header, messages, input) */
+.chat-content-active {
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    background-image: url('/imagenes/parque.jpg'); /* Ruta ajustada para public/imagenes */
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+    position: relative; /* Necesario para el pseudo-elemento */
+    z-index: 2; 
+}
+
+/* Pseudo-elemento para oscurecer la imagen de fondo del chat, aplicado a .chat-content-active */
+.chat-content-active::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.4); /* Capa negra con 40% de opacidad */
+    z-index: 1; 
+}
+
+.chat-header {
+    padding: 10px 20px;
+    background-color: #008069; 
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-bottom: 1px solid #e0e0e0;
+    position: relative; 
+    z-index: 2;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Sombra sutil para el header del chat */
+}
+
+.chat-header-info {
+    display: flex;
+    align-items: center;
+    cursor: pointer; 
+}
+
+.chat-header-info .chat-avatar {
+    width: 45px; 
+    height: 45px;
+    border-radius: 50%;
+    overflow: hidden;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-right: 12px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Sombra para el avatar del chat */
+}
+
+.chat-header-info .chat-avatar img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 50%;
+}
+
+.chat-header-info h4 {
+    margin: 0;
+    font-size: 19px; 
+    font-weight: 500;
+}
+
+.chat-header-info p {
+    margin: 0;
+    font-size: 13px;
+    color: rgba(255, 255, 255, 0.8); 
+}
+
+.chat-messages {
+    flex-grow: 1;
+    padding: 20px;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 10px; 
+    position: relative; 
+    z-index: 2;
+}
+
+.message {
+    max-width: 70%; 
+    padding: 10px 14px; 
+    border-radius: 10px; 
+    position: relative;
+    font-size: 15px; 
+    line-height: 20px;
+    word-wrap: break-word;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1); 
+}
+
+.message p {
+    margin: 0;
+    padding-right: 45px; 
+}
+
+.message span {
+    position: absolute;
+    bottom: 5px; 
+    right: 10px; 
+    font-size: 11px;
+    color: rgba(0, 0, 0, 0.45); 
+}
+
+.message.sent {
+    align-self: flex-end;
+    background-color: #dcf8c6;
+    color: #111b21;
+}
+
+.message.received {
+    align-self: flex-start;
+    background-color: #ffffff;
+    color: #111b21;
+}
+
+.chat-input {
+    display: flex;
+    padding: 10px 20px;
+    background-color: #f0f2f5;
+    border-top: 1px solid #e0e0e0;
+    position: relative; 
+    z-index: 2;
+    box-shadow: 0 -2px 4px rgba(0, 0, 0, 0.05); 
+}
+
+.chat-input input {
+    flex-grow: 1;
+    padding: 12px 18px; 
+    border: none;
+    border-radius: 25px; 
+    margin-right: 12px;
+    font-size: 16px;
+    background-color: #ffffff;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1); 
+}
+
+.chat-input input:focus {
+    outline: none;
+    box-shadow: 0 0 0 2px #008069; 
+}
+
+.chat-input button {
+    background-color: #008069;
+    color: white;
+    border: none;
+    border-radius: 50%;
+    width: 48px; 
+    height: 48px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 22px; 
+    cursor: pointer;
+    transition: background-color 0.2s ease-in-out, transform 0.2s ease-in-out;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2); 
+}
+
+.chat-input button:hover {
+    background-color: #006b5a;
+    transform: scale(1.05); 
+}
+
+/* Ajuste para la flecha de retroceso en el encabezado del chat */
+.back-arrow {
+    font-size: 26px; 
+    margin-right: 18px; 
+    cursor: pointer;
+    display: block; 
+    color: white; 
+    font-weight: bold; 
+    transition: transform 0.2s ease-in-out;
+}
+
+.back-arrow:hover {
+    transform: translateX(-3px); 
+}
+
+/* Estilos para el mensaje de bienvenida cuando no hay chat activo */
+.welcome-message-container {
+    flex-grow: 1; 
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    font-size: 22px; 
+    color: #667781; 
+    background-color: #ececec; /* Un fondo claro para el mensaje de bienvenida */
+    text-align: center;
+    padding: 20px;
+    border-radius: 0; 
+    height: 100%; 
+    width: 100%; 
+}
+
+.welcome-message-container p {
+    max-width: 60%; 
+    line-height: 1.5;
+}
+
+/* Estilos para el modal del perfil */
+.profile-modal {
+    display: none; 
+    position: fixed;
+    z-index: 1000; 
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color:#008069 ; 
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    backdrop-filter: blur(5px); /* Efecto de desenfoque al fondo */
+}
+
+.profile-modal.show {
+    display: flex; 
+}
+
+.profile-modal-content {
+    background-color: #fff;
+    padding: 30px 20px; 
+    border-radius: 12px; 
+    text-align: center;
+    position: relative;
+    max-width: 90%;
+    max-height: 90%;
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.4); 
+    transform: scale(0.8); 
+    opacity: 0; 
+    transition: transform 0.3s ease-out, opacity 0.3s ease-out;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px; 
+}
+
+.profile-modal.show .profile-modal-content {
+    transform: scale(1); 
+    opacity: 1; 
+}
+
+.profile-modal-avatar {
+    width: 180px; 
+    height: 180px;
+    border-radius: 50%;
+    overflow: hidden;
+    margin-bottom: 10px;
+    border: 4px solid #008069; 
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2); 
+}
+
+.profile-modal-avatar img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.profile-modal-name {
+    font-size: 28px; 
+    font-weight: 700; 
+    color: #111b21;
+    margin-bottom: 8px;
+}
+
+.profile-modal-actions {
+    display: flex;
+    gap: 30px; 
+    margin-top: 15px;
+}
+
+.profile-modal-action-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    color: #008069;
+    font-size: 15px;
+    cursor: pointer;
+    transition: color 0.2s ease-in-out, transform 0.2s ease-in-out;
+}
+
+.profile-modal-action-item:hover {
+    color: #006b5a;
+    transform: translateY(-3px); 
+}
+
+.profile-modal-action-item .icon {
+    font-size: 32px; 
+    margin-bottom: 8px;
+    background-color: #e2f2e7; 
+    border-radius: 50%;
+    width: 60px; 
+    height: 60px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); 
+}
+
+.profile-modal-action-item span {
+    font-size: 13px;
+    color: #667781;
+    font-weight: 500;
+}
+
+/* Estilos para la flecha de cerrar en el modal */
+.close-modal {
+    position: absolute;
+    top: 15px;
+    left: 20px; 
+    font-size: 32px; 
+    cursor: pointer;
+    color: #555; 
+    font-weight: bold;
+    transition: color 0.2s ease-in-out, transform 0.2s ease-in-out;
+}
+
+.close-modal:hover {
+    color: #000;
+    transform: translateX(-3px);
+}
+
+/* --- NUEVOS ESTILOS PARA EL MODAL DE MI PERFIL --- */
+.my-profile-full-modal {
+    position: fixed;
+    z-index: 1000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: #065143; /* Fondo oscuro de WhatsApp para el modal de perfil */
+    display: flex;
+    flex-direction: column; /* Para apilar el header y el body */
+    transition: transform 0.3s ease-out; /* Animación de entrada */
+    transform: translateX(100%); /* Empieza fuera de la pantalla a la derecha */
+}
+
+.my-profile-full-modal.show {
+    transform: translateX(0); /* Se desliza hacia adentro */
+}
+
+.my-profile-modal-content {
+    flex-grow: 1; /* Ocupa el resto del espacio */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding-top: 20px; /* Espacio superior */
+}
+
+.my-profile-modal-header {
+    width: 100%;
+    background-color: #05362e ; /* Mismo fondo oscuro */
+    color: white;
+    padding: 20px 15px;
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3); /* Sombra para el header */
+    position: relative;
+    z-index: 10;
+}
+
+.my-profile-modal-header h3 {
+    margin: 0;
+    font-size: 20px;
+    font-weight: 600;
+}
+
+.my-profile-modal-header .close-modal {
+    position: static; /* Restablecer la posición para que esté en el flujo */
+    font-size: 24px; /* Tamaño más pequeño para la flecha en el header */
+    color: white;
+    margin-right: 15px;
+}
+
+.my-profile-modal-body {
+    flex-grow: 1;
+    width: 100%;
+    overflow-y: auto; /* Permite desplazamiento si el contenido es largo */
+    padding: 20px 0; /* Padding vertical */
+}
+
+.my-profile-modal-avatar-large {
+    width: 200px;
+    height: 200px;
+    border-radius: 50%;
+    overflow: hidden;
+    margin: 20px auto 30px auto; /* Centrar y dar espacio */
+    border: 4px solid #00a884; /* Borde verde WhatsApp */
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3); /* Sombra más fuerte */
+}
+
+.my-profile-modal-avatar-large img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.my-profile-modal-info-section {
+    background-color: #042c25; /* Fondo oscuro para las secciones de info */
+    padding: 15px 20px;
+    margin-bottom: 10px; /* Espacio entre secciones */
+    color: white;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+}
+
+.my-profile-modal-info-section .label {
+    font-size: 13px;
+    color: #8696a0; /* Gris claro para el label */
+    margin-bottom: 5px;
+}
+
+.my-profile-modal-info-section .info-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 8px;
+}
+
+.my-profile-modal-info-section .value {
+    font-size: 17px;
+    font-weight: 500;
+    color: #e9edef; /* Blanco casi puro para el valor */
+    margin: 0;
+}
+
+.my-profile-modal-info-section .description {
+    font-size: 13px;
+    color: #8696a0;
+    margin: 0;
+    line-height: 1.4;
+}
+
+.my-profile-modal-info-section .edit-icon {
+    font-size: 20px;
+    color: #8696a0;
+    cursor: pointer;
+    transition: color 0.2s ease-in-out;
+}
+
+.my-profile-modal-info-section .edit-icon:hover {
+    color: #00a884; /* Verde WhatsApp al pasar el ratón */
+}
