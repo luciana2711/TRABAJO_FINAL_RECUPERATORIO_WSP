@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 // Importamos chatData solo para la inicialización del estado
-import { chatData as initialChatData } from './data/chatData'; 
+import { chatData as initialChatData } from './data/chatdata'; 
 
 function App() {
     // chatData ahora es parte del estado para que los cambios se rendericen
