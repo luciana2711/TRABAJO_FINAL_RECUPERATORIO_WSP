@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { chatData as initialChatData } from './chatData'; 
+import { chatData as initialChatData } from './chatData.js'; 
 
 function App() {
     const [chats, setChats] = useState(initialChatData);
