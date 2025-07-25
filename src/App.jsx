@@ -1,9 +1,8 @@
 import React, { useState, useEffect } from 'react';
-import { chatData as initialChatData } from './data/chatData.js';
-
+import { chatData } from './data/chatData'; 
 
 function App() {
-    const [chats, setChats] = useState(initialChatData);
+    const [chats, setChats] = useState(chatData);
     const [activeChatId, setActiveChatId] = useState(null); 
     const [showSidebar, setShowSidebar] = useState(true); 
     const [showProfileModal, setShowProfileModal] = useState(false); 
