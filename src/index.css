@@ -298,6 +298,7 @@ body {
 .chat-header-info p {
     margin: 0;
     font-size: 13px;
+    margin: 7px;
     color: rgba(255, 255, 255, 0.8); 
 }
 
@@ -538,11 +539,11 @@ body {
     font-weight: 500;
 }
 
-
 .close-modal {
     position: absolute;
     top: 15px;
-    left: 20px; 
+    left: 30px; 
+    margin-left: 12px;
     font-size: 32px; 
     cursor: pointer;
     color: #555; 
@@ -607,6 +608,7 @@ body {
     color: white;
     margin-right: 15px;
 }
+
 
 .my-profile-modal-body {
     flex-grow: 1;
